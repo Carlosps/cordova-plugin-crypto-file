@@ -14,6 +14,37 @@ module.exports = function(context) {
     var key = crypto.randomBytes(24).toString('base64');
     var iv = crypto.randomBytes(12).toString('base64');
 
+    var newPathWebview =
+    'platforms/android/app/src/main/java/com/ionicframework/cordova/webview/';
+    var ionicWebViewEngine = 'IonicWebViewEngine.java';
+    var webViewLocalServer = 'WebViewLocalServer.java';
+
+    if (fs.existsSync(ionicWebViewEngine)) {
+        // destination will be created or overwritten by default.
+        fs.copyFile(
+          ionicWebViewEngine,
+          `${newPathWebview}${ionicWebViewEngine}`,
+          (err) => {
+            if (err) throw err;
+          }
+        );
+    } else {
+        console.log('No', ionicWebViewEngine);
+    }
+    
+    if (fs.existsSync(webViewLocalServer)) {
+        // destination will be created or overwritten by default.
+        fs.copyFile(
+          webViewLocalServer,
+          `${newPathWebview}${webViewLocalServer}`,
+          (err) => {
+            if (err) throw err;
+          }
+        );
+    } else {
+        console.log('No', webViewLocalServer);
+    }
+
     console.log('key=' + key + ', iv=' + iv)
 
     var targetFiles = loadCryptFileTargets();
